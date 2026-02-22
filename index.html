@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu App Financeiro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="login">
+  <h2>Digite a senha para acessar</h2>
+  <input type="password" id="senhaInput" placeholder="Senha">
+  <button onclick="verificarSenha()">Entrar</button>
+  <p id="erro" class="erro"></p>
+</div>
+
+<div id="app" class="hidden">
+  <div class="container">
+    <h1>Meu App Financeiro</h1>
+    <p>Edite sua planilha abaixo:</p>
+    <iframe src="https://docs.google.com/spreadsheets/d/1obPVZiJ2huP3RZF-MTPJIO6voalRvmgf0ic381EjXp4/edit?usp=sharing"></iframe>
+  </div>
+</div>
+
+<script>
+  function verificarSenha() {
+    const senhaCorreta = "260506Lf@";
+    const input = document.getElementById("senhaInput").value;
+    const erro = document.getElementById("erro");
+    if(input === senhaCorreta) {
+      document.getElementById("login").style.display = "none";
+      document.getElementById("app").classList.remove("hidden");
+    } else {
+      erro.textContent = "Senha incorreta! Tente novamente.";
+    }
+  }
+</script>
+</body>
+</html>

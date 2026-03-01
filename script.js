@@ -15,6 +15,7 @@ setDoc,
 getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+/* CONFIG FIREBASE */
 const firebaseConfig = {
   apiKey: "AIzaSyDM4cT_y2a36p1sKmEVRDNBXcOTll77gCo",
   authDomain: "appfinanceiroo.firebaseapp.com",
@@ -28,6 +29,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+/* ELEMENTOS */
 const loginBox = document.getElementById("loginBox");
 const appBox = document.getElementById("appBox");
 const erro = document.getElementById("erro");
@@ -36,42 +38,42 @@ const userName = document.getElementById("userName");
 
 let usuarioAtual=null;
 
-// CADASTRO
+/* CADASTRO */
 window.cadastrar = async ()=>{
 try{
-await createUserWithEmailAndPassword(
-auth,
-email.value,
-senha.value
-);
+await createUserWithEmailAndPassword(auth,email.value,senha.value);
 }catch(e){
 erro.innerText=e.message;
 }
 };
 
-// LOGIN
+/* LOGIN */
 window.login = async ()=>{
 try{
 await signInWithEmailAndPassword(auth,email.value,senha.value);
 }catch{
-erro.innerText="Login inválido";
+erro.innerText="Email ou senha inválidos";
 }
 };
 
-// LOGOUT
-window.logout = ()=> signOut(auth);
+/* LOGOUT */
+window.logout = ()=>signOut(auth);
 
-// SALVAR PLANILHA
+/* SALVAR PLANILHA */
 window.salvarPlanilha = async ()=>{
 
+let link = linkPlanilha.value
+.replace("/edit?usp=sharing","/preview")
+.replace("/edit","/preview");
+
 await setDoc(doc(db,"usuarios",usuarioAtual.uid),{
-planilha:linkPlanilha.value
+planilha:link
 });
 
 carregarPlanilha();
 };
 
-// CARREGAR
+/* CARREGAR PLANILHA */
 async function carregarPlanilha(){
 
 const ref = doc(db,"usuarios",usuarioAtual.uid);
@@ -82,8 +84,8 @@ frame.src=snap.data().planilha;
 }
 }
 
-// LOGIN DETECTADO
-onAuthStateChanged(auth,async(user)=>{
+/* DETECTAR LOGIN */
+onAuthStateChanged(auth, async(user)=>{
 
 if(user){
 usuarioAtual=user;
@@ -93,7 +95,7 @@ userName.innerText="👋 "+user.email;
 loginBox.classList.add("hidden");
 appBox.classList.remove("hidden");
 
-carregarPlanilha();
+await carregarPlanilha();
 
 }else{
 loginBox.classList.remove("hidden");
@@ -102,13 +104,13 @@ appBox.classList.add("hidden");
 
 });
 
-// ENTER LOGIN
+/* ENTER LOGIN */
 document.addEventListener("keypress",(e)=>{
 if(e.key==="Enter") login();
 });
 
-// 🌙 TEMA
-window.toggleTema = ()=>{
+/* TEMA */
+window.toggleTema=()=>{
 document.body.classList.toggle("light");
 
 localStorage.setItem(
@@ -117,7 +119,6 @@ document.body.classList.contains("light")
 );
 };
 
-// carregar tema salvo
 if(localStorage.getItem("tema")==="true"){
 document.body.classList.add("light");
 }

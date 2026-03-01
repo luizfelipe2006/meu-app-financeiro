@@ -1,39 +1,59 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu App Financeiro</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>App Financeiro</title>
+
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-<div id="login">
-  <h2>Digite a senha para acessar</h2>
-  <input type="password" id="senhaInput" placeholder="Senha">
-  <button onclick="verificarSenha()">Entrar</button>
-  <p id="erro" class="erro"></p>
+
+<!-- LOGIN -->
+<div class="container" id="loginBox">
+
+<h1>💰 App Financeiro</h1>
+
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="senha" placeholder="Senha">
+
+<button onclick="login()">Entrar</button>
+<button class="sec" onclick="cadastrar()">Criar Conta</button>
+
+<p id="erro"></p>
+
 </div>
 
-<div id="app" class="hidden">
-  <div class="container">
-    <h1>Meu App Financeiro</h1>
-    <p>Edite sua planilha abaixo:</p>
-    <iframe src="https://docs.google.com/spreadsheets/d/1obPVZiJ2huP3RZF-MTPJIO6voalRvmgf0ic381EjXp4/edit?usp=sharing"></iframe>
-  </div>
+<!-- APP -->
+<div id="appBox" class="hidden">
+
+<header>
+<h3 id="userName"></h3>
+
+<div>
+<button onclick="toggleTema()">🌙</button>
+<button onclick="logout()">Sair</button>
+</div>
+</header>
+
+<div class="container">
+
+<h2>Sua Planilha</h2>
+
+<input type="text" id="linkPlanilha" placeholder="Cole o link da planilha Google">
+
+<button onclick="salvarPlanilha()">Salvar</button>
+
+<iframe id="framePlanilha"></iframe>
+
 </div>
 
-<script>
-  function verificarSenha() {
-    const senhaCorreta = "260506Lf@";
-    const input = document.getElementById("senhaInput").value;
-    const erro = document.getElementById("erro");
-    if(input === senhaCorreta) {
-      document.getElementById("login").style.display = "none";
-      document.getElementById("app").classList.remove("hidden");
-    } else {
-      erro.textContent = "Senha incorreta! Tente novamente.";
-    }
-  }
-</script>
+</div>
+
+<script type="module" src="script.js"></script>
+
 </body>
 </html>
